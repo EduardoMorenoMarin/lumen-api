@@ -1,0 +1,21 @@
+{
+  "properties": [
+    {
+      "name": "security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Secret key used to sign JWT access and refresh tokens."
+    },
+    {
+      "name": "security.jwt.expiration",
+      "type": "java.time.Duration",
+      "description": "Access token lifetime duration.",
+      "defaultValue": "PT1H"
+    },
+    {
+      "name": "security.jwt.refresh-expiration",
+      "type": "java.time.Duration",
+      "description": "Refresh token lifetime duration.",
+      "defaultValue": "PT8H"
+    }
+  ]
+}
