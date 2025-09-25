@@ -17,6 +17,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
 
   List<Reservation> findByCreatedAtBetween(Instant start, Instant end);
 
-  @Query("SELECT r FROM Reservation r WHERE r.status = com.librerialumen.api.domain.enums.ReservationStatus.RESERVED AND r.expirationDate < :now")
+  @Query("SELECT r FROM Reservation r WHERE r.status IN (com.librerialumen.api.domain.enums.ReservationStatus.RESERVED, com.librerialumen.api.domain.enums.ReservationStatus.PENDING) AND r.expirationDate IS NOT NULL AND r.expirationDate < :now")
   List<Reservation> findExpiredReservations(@Param("now") Instant now);
 }
