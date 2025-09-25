@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "security.jwt")
 public class JwtProperties {
 
-  private String secret = "change-me";
+  private String secret = "change-me-to-a-strong-secret";
   private Duration expiration = Duration.ofHours(1);
   private Duration refreshExpiration = Duration.ofHours(8);
 }

@@ -90,7 +90,7 @@ public class JwtTokenService {
 
   private SecretKey buildSigningKey(String secret) {
     if (secret == null || secret.isBlank()) {
-      secret = "change-me-change-me-change-me-change";
+      secret = "change-me-to-a-strong-secret";
     }
     byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
     if (keyBytes.length < 32) {
