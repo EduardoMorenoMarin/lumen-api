@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/reports")
 @RequiredArgsConstructor
 @Validated
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 @Tag(name = "Reports", description = "Analytical reports and metrics")
 @SecurityRequirement(name = "bearerAuth")
 public class ReportsController {

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/inventory")
 @RequiredArgsConstructor
 @Validated
-@PreAuthorize("hasAnyRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 @Tag(name = "Inventory", description = "Stock adjustments and queries")
 @SecurityRequirement(name = "bearerAuth")
 public class InventoryController {

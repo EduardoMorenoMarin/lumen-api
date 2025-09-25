@@ -36,14 +36,14 @@ public class CategoriesController {
   private final CategoryService categoryService;
 
   @PostMapping
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Create category", description = "Registers a new product category")
   public CategoryViewDTO create(@Valid @RequestBody CategoryCreateDTO dto) {
     return categoryService.create(dto);
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Update category", description = "Updates an existing product category")
   public CategoryViewDTO update(
       @Parameter(description = "Category identifier") @PathVariable("id") UUID id,
@@ -52,7 +52,7 @@ public class CategoriesController {
   }
 
   @PatchMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Patch category", description = "Applies a partial update to a product category")
   public CategoryViewDTO patch(
       @Parameter(description = "Category identifier") @PathVariable("id") UUID id,
@@ -61,7 +61,7 @@ public class CategoriesController {
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Delete category", description = "Removes a category by identifier")
   public ResponseEntity<Void> delete(
       @Parameter(description = "Category identifier") @PathVariable("id") UUID id) {
@@ -70,14 +70,14 @@ public class CategoriesController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "List categories", description = "Returns all categories available")
   public List<CategoryViewDTO> list() {
     return categoryService.list();
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Get category", description = "Fetches a category by its identifier")
   public CategoryViewDTO get(
       @Parameter(description = "Category identifier") @PathVariable("id") UUID id) {

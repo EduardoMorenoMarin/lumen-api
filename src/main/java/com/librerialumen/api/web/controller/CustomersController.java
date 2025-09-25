@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
 @Validated
-@PreAuthorize("hasAnyRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 @Tag(name = "Customers", description = "Customer directory management")
 @SecurityRequirement(name = "bearerAuth")
 public class CustomersController {
@@ -51,7 +51,7 @@ public class CustomersController {
   }
 
   @PatchMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Patch customer", description = "Applies a partial update to an existing customer")
   public CustomerViewDTO patch(
       @Parameter(description = "Customer identifier") @PathVariable("id") UUID id,
@@ -60,7 +60,7 @@ public class CustomersController {
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Delete customer", description = "Removes a customer by identifier")
   public ResponseEntity<Void> delete(
       @Parameter(description = "Customer identifier") @PathVariable("id") UUID id) {

@@ -36,14 +36,14 @@ public class ProductsController {
   private final ProductService productService;
 
   @PostMapping
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Create product", description = "Registers a new product in the catalog")
   public ProductViewDTO create(@Valid @RequestBody ProductCreateDTO dto) {
     return productService.create(dto);
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Update product", description = "Updates product details")
   public ProductViewDTO update(
       @Parameter(description = "Product identifier") @PathVariable("id") UUID id,
@@ -52,7 +52,7 @@ public class ProductsController {
   }
 
   @PatchMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Patch product", description = "Applies a partial update to product details")
   public ProductViewDTO patch(
       @Parameter(description = "Product identifier") @PathVariable("id") UUID id,
@@ -61,7 +61,7 @@ public class ProductsController {
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Delete product", description = "Removes a product by identifier")
   public ResponseEntity<Void> delete(
       @Parameter(description = "Product identifier") @PathVariable("id") UUID id) {
@@ -70,14 +70,14 @@ public class ProductsController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "List products", description = "Returns all products available")
   public List<ProductViewDTO> list() {
     return productService.list();
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasAnyRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
   @Operation(summary = "Get product", description = "Fetches a product by identifier")
   public ProductViewDTO get(
       @Parameter(description = "Product identifier") @PathVariable("id") UUID id) {

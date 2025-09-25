@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/sales")
 @RequiredArgsConstructor
 @Validated
-@PreAuthorize("hasAnyRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 @Tag(name = "Sales", description = "Sales lifecycle operations")
 @SecurityRequirement(name = "bearerAuth")
 public class SalesController {

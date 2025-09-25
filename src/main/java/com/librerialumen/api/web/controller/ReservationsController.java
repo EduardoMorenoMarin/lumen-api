@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/reservations")
 @RequiredArgsConstructor
 @Validated
-@PreAuthorize("hasAnyRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 @Tag(name = "Reservations", description = "Manage product reservations")
 @SecurityRequirement(name = "bearerAuth")
 public class ReservationsController {
