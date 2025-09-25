@@ -2,6 +2,7 @@ package com.librerialumen.api.service;
 
 import com.librerialumen.api.web.dto.reservation.ReservationCreateDTO;
 import com.librerialumen.api.web.dto.reservation.ReservationViewDTO;
+import java.util.List;
 import java.util.UUID;
 
 public interface ReservationService {
@@ -13,6 +14,8 @@ public interface ReservationService {
   ReservationViewDTO confirmPickup(UUID reservationId, UUID actorUserId, boolean createSale);
 
   ReservationViewDTO cancel(UUID reservationId, UUID actorUserId, String reason);
+
+  List<ReservationViewDTO> list();
 
   ReservationViewDTO get(UUID reservationId);
 }

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -182,6 +183,13 @@ public class ReservationServiceImpl implements ReservationService {
 
   @Override
   @Transactional(readOnly = true)
+  public List<ReservationViewDTO> list() {
+    List<Reservation> reservations = reservationRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    return reservationMapper.toViewList(reservations);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
   public ReservationViewDTO get(UUID reservationId) {
     Reservation reservation = reservationRepository.findById(reservationId)
         .orElseThrow(() -> new BusinessException("RESERVATION_NOT_FOUND", "Reservation not found"));
@@ -244,7 +252,6 @@ public class ReservationServiceImpl implements ReservationService {
     return SaleCreateDTO.builder()
         .items(saleItems)
         .paymentMethod("RESERVATION")
-        .cashierId(null)
         .customerId(reservation.getCustomer() != null ? reservation.getCustomer().getId() : null)
         .build();
   }
@@ -257,3 +264,5 @@ public class ReservationServiceImpl implements ReservationService {
         actor != null ? actor.toString() : null, payload);
   }
 }
+
+

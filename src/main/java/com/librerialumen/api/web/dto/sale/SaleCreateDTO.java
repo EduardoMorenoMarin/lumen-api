@@ -17,6 +17,6 @@ public class SaleCreateDTO {
 
   private List<SaleItemCreateDTO> items;
   private String paymentMethod;
-  private UUID cashierId;
   private UUID customerId;
 }
+

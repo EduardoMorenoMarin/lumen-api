@@ -84,13 +84,13 @@ public class SaleServiceImpl implements SaleService {
     sale.setDiscountAmount(BigDecimal.ZERO);
     sale.setNotes(dto.getPaymentMethod());
 
-    if (dto.getCashierId() != null) {
-      User cashier = userRepository.findById(dto.getCashierId())
-          .orElseThrow(() -> new BusinessException("CASHIER_NOT_FOUND", "Cashier not found"));
-      sale.setCashier(cashier);
-    } else if (actorUserId != null) {
-      userRepository.findById(actorUserId).ifPresent(sale::setCashier);
+    if (actorUserId == null) {
+      throw new BusinessException("CASHIER_REQUIRED", "Authenticated cashier is required to create sales");
     }
+
+    User cashier = userRepository.findById(actorUserId)
+        .orElseThrow(() -> new BusinessException("CASHIER_NOT_FOUND", "Cashier not found"));
+    sale.setCashier(cashier);
 
     if (dto.getCustomerId() != null) {
       Customer customer = customerRepository.findById(dto.getCustomerId())
@@ -135,4 +135,5 @@ public class SaleServiceImpl implements SaleService {
         actorUserId != null ? actorUserId.toString() : null, details);
   }
 }
+
 

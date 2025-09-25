@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -75,6 +76,12 @@ public class ReservationsController {
     return reservationService.cancel(id, actorId, request.getReason());
   }
 
+  @GetMapping
+  @Operation(summary = "List reservations", description = "Returns all reservations available")
+  public List<ReservationViewDTO> list() {
+    return reservationService.list();
+  }
+
   @GetMapping("/{id}")
   @Operation(summary = "Get reservation", description = "Retrieves a reservation by identifier")
   public ReservationViewDTO get(
@@ -91,3 +98,4 @@ public class ReservationsController {
         .orElseThrow(() -> new BusinessException("USER_NOT_FOUND", "Authenticated user not found"));
   }
 }
+
