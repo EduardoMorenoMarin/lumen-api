@@ -70,14 +70,14 @@ public class CategoriesController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+  @PreAuthorize("hasAnyRole('ADMIN')")
   @Operation(summary = "List categories", description = "Returns all categories available")
   public List<CategoryViewDTO> list() {
     return categoryService.list();
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+  @PreAuthorize("hasAnyRole('ADMIN')")
   @Operation(summary = "Get category", description = "Fetches a category by its identifier")
   public CategoryViewDTO get(
       @Parameter(description = "Category identifier") @PathVariable("id") UUID id) {

@@ -70,14 +70,14 @@ public class ProductsController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+  @PreAuthorize("hasAnyRole('ADMIN')")
   @Operation(summary = "List products", description = "Returns all products available")
   public List<ProductViewDTO> list() {
     return productService.list();
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+  @PreAuthorize("hasAnyRole('ADMIN')")
   @Operation(summary = "Get product", description = "Fetches a product by identifier")
   public ProductViewDTO get(
       @Parameter(description = "Product identifier") @PathVariable("id") UUID id) {
