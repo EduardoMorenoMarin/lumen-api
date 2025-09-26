@@ -74,7 +74,8 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration cfg = new CorsConfiguration();
     cfg.setAllowedOrigins(List.of(
-        "https://lumen-api-production-5ec3.up.railway.app"
+        "https://lumen-api-production-5ec3.up.railway.app",
+        "https://front-lumen.onrender.com"
     ));
     cfg.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
     cfg.setAllowedHeaders(List.of("Content-Type","Authorization","Accept","Origin","X-Requested-With"));
