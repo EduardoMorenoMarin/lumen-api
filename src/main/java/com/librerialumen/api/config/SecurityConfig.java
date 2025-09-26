@@ -20,6 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
+
 @Configuration
 @EnableMethodSecurity
 @EnableConfigurationProperties(JwtProperties.class)
@@ -27,18 +33,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
   private static final String[] SWAGGER_PATHS = {
-      "/v3/api-docs",
-      "/v3/api-docs/**",
-      "/swagger-ui",
-      "/swagger-ui/**",
-      "/swagger-ui.html",
-      "/swagger-ui.html/**",
-      "/swagger-ui/index.html",
-      "/swagger-ui/index.html/**",
-      "/doc",
-      "/doc/**",
-      "/webjars",
-      "/webjars/**"
+      "/v3/api-docs", "/v3/api-docs/**",
+      "/swagger-ui", "/swagger-ui/**",
+      "/swagger-ui.html", "/swagger-ui.html/**",
+      "/swagger-ui/index.html", "/swagger-ui/index.html/**",
+      "/doc", "/doc/**",
+      "/webjars", "/webjars/**"
   };
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -48,6 +48,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
+        .cors(cors -> {})
         .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
@@ -55,13 +56,11 @@ public class SecurityConfig {
             .requestMatchers(SWAGGER_PATHS).permitAll()
             .requestMatchers("/error", "/error/**").permitAll()
             .requestMatchers(
-                "/api/v1/auth/login",
+                "/api/v1/auth/**",      
                 "/actuator/health",
                 "/actuator/info",
-                "/public/products",
-                "/public/products/**",
-                "/public/categories",
-                "/public/categories/**",
+                "/public/products", "/public/products/**",
+                "/public/categories", "/public/categories/**",
                 "/public/reservations"
             ).permitAll()
             .anyRequest().authenticated()
@@ -72,13 +71,25 @@ public class SecurityConfig {
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration cfg = new CorsConfiguration();
+    cfg.setAllowedOrigins(List.of(
+        "https://lumen-api-production-5ec3.up.railway.app"
+    ));
+    cfg.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+    cfg.setAllowedHeaders(List.of("Content-Type","Authorization","Accept","Origin","X-Requested-With"));
+    cfg.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
+    src.registerCorsConfiguration("/**", cfg);
+    return src;
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-      throws Exception {
+  public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
 
@@ -89,4 +100,3 @@ public class SecurityConfig {
     return provider;
   }
 }
-
