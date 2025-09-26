@@ -15,7 +15,7 @@ public class CorsConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     
-    configuration.setAllowedOrigins(List.of("https://lumen-front-5dxk.vercel.app/")); 
+    configuration.setAllowedOrigins(List.of("https://lumen-api-production-5ec3.up.railway.app")); 
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowCredentials(true); // Si usas cookies/tokens con credenciales
